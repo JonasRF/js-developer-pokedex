@@ -20,7 +20,19 @@
     display: flex;
     justify-content: space-evenly;
     color: #fff;
+  }
 
+  #search:focus {
+    outline: none;
+  }
+
+  #search {
+  background: none;
+    color: #fff;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: 70%;
   }
 
   #poke-image-placeholder {
