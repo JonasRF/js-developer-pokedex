@@ -1,6 +1,7 @@
 const pokemonList = document.getElementById('pokemonList')
 const loadMoreButton = document.getElementById('loadMoreButton')
 const search = document.getElementById('search')
+const number = document.getElementById('number')
 
 const maxRecords = 151
 const limit = 10
@@ -24,9 +25,14 @@ function convertPokemonToLi(pokemon) {
     `
 }
 
-search.addEventListener('change', () => {
-    alert('Testing')
+search.addEventListener('change', async (event) => {
+   const jsonBody = await pokeApi.getPokemonCardDetail(event.target.value)
+
+    number.innerHTML = '#' + jsonBody.id.toString().padStart(3, '0');
+  
 })
+
+
 
 function loadPokemonItens(offset, limit) {
  
