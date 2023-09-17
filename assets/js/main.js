@@ -6,6 +6,11 @@ const pokemonImage = document.getElementById('pokemon-image')
 const type = document.querySelectorAll('.type')
 const types = document.getElementById('types')
 const statNumber = document.getElementsByClassName('stat-number')
+const barInner = document.getElementsByClassName('bar-inner')
+const barOuter = document.getElementsByClassName('bar-outer')
+const statDesc = document.getElementsByClassName('stat-desc')
+const baseStats = document.getElementById('base-stats')
+const pokemomDetail = document.getElementById('pokemonDetail')
 
 const maxRecords = 151
 const limit = 10
@@ -53,8 +58,14 @@ function convertPokemonToLi(pokemon) {
 search.addEventListener('change', async (event) => {
    const jsonBody = await pokeApi.getPokemonCardDetail(event.target.value)
 
-   if(!jsonBody) alert("Ookemon does not exist.")
-   console.log(jsonBody)
+   if(!jsonBody){
+    alert("Ookemon does not exist.")
+    return;
+   } 
+
+   const mainColor = typeColors[jsonBody.types[0].type.name]; 
+   baseStats.style.color = `rgb(${mainColor[0]}, ${mainColor[1]}, ${mainColor[2]})`;
+   pokemomDetail.style.backgroundColor = `rgb(${mainColor[0]}, ${mainColor[1]}, ${mainColor[2]})`;
 
     number.innerHTML = '#' + jsonBody.id.toString().padStart(3, '0');
 
@@ -75,9 +86,12 @@ search.addEventListener('change', async (event) => {
     });
     
     jsonBody.stats.forEach((s, i) => {
-        console.log(s)
+        statNumber[i].innerHTML = s.base_stat.toString().padStart(3, '0');
+        barInner[i].style.width = `${s.base_stat}%`;
+        barInner[i].style.backgroundColor = `rgb(${mainColor[0]}, ${mainColor[1]}, ${mainColor[2]})`
+        barOuter[i].style.backgroundColor = `rgba(${mainColor[0]}, ${mainColor[1]}, ${mainColor[2]}, 0.3)`
+        statDesc[i].style.color =           `rgb(${mainColor[0]}, ${mainColor[1]}, ${mainColor[2]})`
     })
-  
 })
 
 function loadPokemonItens(offset, limit) {
