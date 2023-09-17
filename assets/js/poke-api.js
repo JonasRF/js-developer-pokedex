@@ -35,9 +35,15 @@ pokeApi.getPokemons = (offset = 0, limit = 5) => {
 }
 
 pokeApi.getPokemonCardDetail = async (pokemonName) => {
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonName);
-    const jsonBody = await response.json();
+    pokemonNameApi = pokemonName.split(' ').join('-');
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonNameApi);
 
-    return jsonBody;
+    if(response.status == 200) {
+        const jsonBody = await response.json();
+        return jsonBody;
+    }
+    return false;
+
+    
 
 }
